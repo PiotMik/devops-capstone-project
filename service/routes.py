@@ -77,7 +77,7 @@ def read_account(account_id):
     app.logger.info(f"Request to read an Account: {account_id}")
     account = Account.find(by_id=account_id)
     if account is None:
-        abort(status.HTTP_404_NOT_FOUND, f"Account {account_id} not foun")
+        abort(status.HTTP_404_NOT_FOUND, f"Account {account_id} not found")
     return account.serialize(), status.HTTP_200_OK
 
 
@@ -92,7 +92,20 @@ def read_account(account_id):
 # DELETE AN ACCOUNT
 ######################################################################
 
-# ... place you code here to DELETE an account ...
+@app.route("/accounts/<int:account_id>", methods=["DELETE"])
+def delete_account(account_id):
+    """
+    Deletes an Account
+    This endpoint will delete an Account based the data in the body that is posted
+    """
+    app.logger.info(f"Request to delete an Account: {account_id}")
+    account = Account.find(by_id=account_id)
+    if account is None:
+        abort(status.HTTP_404_NOT_FOUND, f"Account {account_id} not found")
+
+    account.delete()
+    return "", status.HTTP_204_NO_CONTENT
+
 
 
 ######################################################################
