@@ -127,7 +127,7 @@ class TestAccountService(TestCase):
     def test_read_an_account(self):
         """It should read an account"""
         new_account = self._create_accounts(1)[0]
-        
+
         get_response = self.client.get(
             f"{BASE_URL}/{new_account.id}",
             content_type="application/json"
@@ -138,7 +138,7 @@ class TestAccountService(TestCase):
 
     def test_account_not_found(self):
         """It should raise 404 when account not found"""
-       
+
         get_response = self.client.get(
             f"{BASE_URL}/0",
             content_type="application/json"
@@ -148,7 +148,7 @@ class TestAccountService(TestCase):
     def test_delete_an_account(self):
         """It should delete an existing account"""
         new_account = self._create_accounts(1)[0]
-        
+
         get_response = self.client.get(
             f"{BASE_URL}/{new_account.id}",
             content_type="application/json"
@@ -174,7 +174,6 @@ class TestAccountService(TestCase):
             content_type="application/json"
         )
         self.assertEqual(delete_response.status_code, status.HTTP_404_NOT_FOUND)
-
 
     def test_update_an_account(self):
         """It should update an existing account"""
@@ -212,7 +211,6 @@ class TestAccountService(TestCase):
         )
         self.assertEqual(update_response.status_code, status.HTTP_404_NOT_FOUND)
 
-
     def test_read_list_a_fake_account(self):
         """It should return a list of all existing accounts"""
         get_response = self.client.get(
@@ -223,7 +221,7 @@ class TestAccountService(TestCase):
         self.assertEqual(get_response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(all_accounts), 0)
 
-        new_accounts = self._create_accounts(2)
+        _ = self._create_accounts(2)
         get_response = self.client.get(
             BASE_URL,
             content_type="application/json"
