@@ -137,10 +137,32 @@ class TestAccountService(TestCase):
         self.assertEqual(account_read, new_account.serialize())
 
     def test_account_not_found(self):
-        """It should read an account"""
+        """It should raise 404 when account not found"""
        
         get_response = self.client.get(
             f"{BASE_URL}/0",
+            content_type="application/json"
+        )
+        self.assertEqual(get_response.status_code, status.HTTP_404_NOT_FOUND)
+
+    def test_delete_an_account(self):
+        """It should delete an existing account"""
+        new_account = self._create_accounts(1)[0]
+        
+        get_response = self.client.get(
+            f"{BASE_URL}/{new_account.id}",
+            content_type="application/json"
+        )
+        self.assertEqual(get_response.status_code, status.HTTP_200_OK)
+
+        delete_response = self.client.delete(
+            f"{BASE_URL}/{new_account.id}",
+            content_type="application/json"
+        )
+        self.assertEqual(delete_response.status_code, status.HTTP_204_NO_CONTENT)
+
+        get_response = self.client.get(
+            f"{BASE_URL}/{new_account.id}",
             content_type="application/json"
         )
         self.assertEqual(get_response.status_code, status.HTTP_404_NOT_FOUND)
