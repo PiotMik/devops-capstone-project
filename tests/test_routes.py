@@ -166,3 +166,12 @@ class TestAccountService(TestCase):
             content_type="application/json"
         )
         self.assertEqual(get_response.status_code, status.HTTP_404_NOT_FOUND)
+
+    def test_delete_a_fake_account(self):
+        """It should raise 404 on deleting an non-existing account"""
+        delete_response = self.client.delete(
+            f"{BASE_URL}/0",
+            content_type="application/json"
+        )
+        self.assertEqual(delete_response.status_code, status.HTTP_404_NOT_FOUND)
+
