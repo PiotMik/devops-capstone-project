@@ -24,4 +24,4 @@ jobs:
         exit
     - name: Test with nosetests
       run: |
-        nosetests
+        docker run nosetests
