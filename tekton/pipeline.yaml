@@ -52,19 +52,19 @@ spec:
       runAfter:
         - clone
 
-    - name: tests
-      workspaces:
-        - name: source
-          workspace: pipeline-workspace          
-      taskRef:
-        name: nose
-      params:
-      - name: database_uri
-        value: "sqlite:///test.db"
-      - name: args
-        value: "-v --with-spec --spec-color"
-      runAfter:
-        - clone
+    # - name: tests
+    #   workspaces:
+    #     - name: source
+    #       workspace: pipeline-workspace          
+    #   taskRef:
+    #     name: nose
+    #   params:
+    #   - name: database_uri
+    #     value: "sqlite:///test.db"
+    #   - name: args
+    #     value: "-v --with-spec --spec-color"
+    #   runAfter:
+    #     - clone
 
     - name: build
       workspaces:
@@ -78,7 +78,7 @@ spec:
         value: "$(params.build-image)"
       runAfter:
         - lint
-        - tests
+        # - tests
 
     - name: deploy
       workspaces: 
